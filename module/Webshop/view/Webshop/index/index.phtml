@@ -1,0 +1,50 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('Home24 WebShop Sample')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+    <?php
+    echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+    ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+    ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+    ?>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active"><a href="<?php echo $this->url('home') ?>">Home</a></li>
+                <li><a href="<?php echo $this->url('cart') ?>"><span class="glyphicon glyphicon-shopping-cart
+                    "></span> Cart (<?php echo $itemsCount;?>)</a></li>
+                </ul>
+                <h3 class="text-muted">Home24 Web Shop</h3>
+            </div>
+            <h3>Products</h3>
+            <div class="row">
+
+                <?php foreach ($products as $product){?>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+
+                        <img style="width:400px;" class="media-object thumbnail" src="<?php echo $this->basePath();?>/uploads/<?php echo $product->getPicture();?>" />
+
+                        <div class="caption">
+                            <h4><?php echo $product->getName();?></h4>
+                            <p><?php echo $product->getDescription();?><br />
+                                <b>Price:</b> <?php echo $product->getPrice();?> €
+                            </p>
+                            <p><a href="<?php echo $this->url('cart', array('action' => 'add', 'id' => $product->getId(), 'qty' => 1 )); ?>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart
+                                "></span> Add to Cart</a> <a href="<?php echo $this->url('view', array('id' => $product->getId())); ?>" class="btn" role="button">View Product</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php }?>
+
+                </div>
+            </div>
+
+        </body>
+        </html>

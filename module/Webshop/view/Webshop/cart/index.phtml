@@ -1,0 +1,73 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('Home24 WebShop Sample')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+    <?php
+    echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+    ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+    ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+    ?>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
+                <li class="active"><a href="<?php echo $this->url('cart') ?>"><span class="glyphicon glyphicon-shopping-cart
+                    "></span> Cart (<?php echo $itemsCount;?>)</a></li>
+                </ul>
+                <h3 class="text-muted">Home24 Web Shop</h3>
+            </div>
+            <h3>Your Cart</h3>
+
+            <?php if(count($items)){?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Cost</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($items as $item){
+                        $product = $item->getProduct();
+                        ?>
+                        <tr>
+                            <td><?php echo $product->getId();?></td>
+                            <td><img style="width:50px;" class="" src="<?php echo $this->basePath();?>/uploads/<?php echo $product->getPicture();?>" /> <?php echo $product->getName();?></td>
+                            <td><?php echo $product->getPrice();?></td>
+                            <td><form class="form-inline" action="<?php echo $this->url('cart', array('action' => 'update', 'id' => $product->getId() )); ?>">
+                                <div class="form-group">
+                                    <input name="qty" type="text" class="form-control" style="width:50px;" value="<?php echo $item->getQty();?>">
+                                </div>
+                                <button type="submit" class="btn btn-default">Update</button>
+                            </form></td>
+                            <td><?php echo $item->getCost();?></td>
+                            <td><a class="btn btn-danger" href="<?php echo $this->url('cart', array('action' => 'remove', 'id' => $product->getId() )); ?>"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+                        </tr>
+                        <?php }?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total :</td>
+                            <td><?php echo $total;?></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <?php }else{?>
+                <div class="alert alert-info" role="alert">There is no items in your cart yet.</div>
+                <?php }?>
+
+
+            </div>
+
+        </body>
+        </html>
